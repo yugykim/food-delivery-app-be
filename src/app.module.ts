@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import * as Joi from 'joi'; // the way of importing a package written by javascript
 import { GraphQLModule } from '@nestjs/graphql';
-import { RestaurantsModule } from './restaurants/restaurants.module';
+import { RestaurantsModule } from './restaurants/entities/restaurants.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { Restaurant } from './restaurants/entities/restaurants.entity';
 
 console.log(Joi);
 @Module({
@@ -34,6 +35,7 @@ console.log(Joi);
       database: process.env.DB_NAME,
       synchronize: true,
       logging: true,
+      entities: [Restaurant],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

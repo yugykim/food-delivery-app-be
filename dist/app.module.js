@@ -10,10 +10,11 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const Joi = require("joi");
 const graphql_1 = require("@nestjs/graphql");
-const restaurants_module_1 = require("./restaurants/restaurants.module");
+const restaurants_module_1 = require("./restaurants/entities/restaurants.module");
 const apollo_1 = require("@nestjs/apollo");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
+const restaurants_entity_1 = require("./restaurants/entities/restaurants.entity");
 console.log(Joi);
 let AppModule = class AppModule {
 };
@@ -43,6 +44,7 @@ AppModule = __decorate([
                 database: process.env.DB_NAME,
                 synchronize: true,
                 logging: true,
+                entities: [restaurants_entity_1.Restaurant],
             }),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
