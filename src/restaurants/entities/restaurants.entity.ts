@@ -1,4 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 //entities :: model in the DB
@@ -6,6 +7,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 //Graphql entities and TypeOrm entities are similar -> using decorator, graphql takes shema and entitie decoraters.
 //we need to tell to put the data to TypeORM.
 //using ObjectType and Entity
+@InputType({ isAbstract: true })
 @ObjectType()
 @Entity()
 export class Restaurant {
@@ -15,22 +17,18 @@ export class Restaurant {
 
   @Field(() => String)
   @Column()
+  @Length(5)
   name: string;
 
   @Field(() => Boolean, { nullable: true })
-  @Column()
+  @Column({ default: true })
+  @IsOptional()
+  @IsBoolean()
   //beacuse it is nullable, isGood?
   isVegan?: boolean;
 
-  @Field(() => String)
+  @Field(() => String, { defaultValue: 'calgary' })
   @Column()
+  @IsString()
   address: string;
-
-  @Field(() => String)
-  @Column()
-  ownersName: string;
-
-  @Field(() => String)
-  @Column()
-  categoryName: string;
 }
